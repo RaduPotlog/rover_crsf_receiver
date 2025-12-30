@@ -27,7 +27,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define CRSF_BAUDRATE           420000
+#define CRSF_BAUDRATE           460800
 
 #define CRSF_NUM_CHANNELS 16
 #define CRSF_MAX_PACKET_SIZE 64 // max declared len is 62+DEST+LEN on top of that = 64
