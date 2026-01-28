@@ -72,7 +72,7 @@ source ~/row2_ws/install/setup.bash
 
 ### Set up params:
 
-1. Serial device name: `device`, default is `/dev/ttyUSB0`
+1. Serial device name: `device`, default is `/dev/ttyAMA0`
 2. Baud rate: `baud_rate`, default is `420000`
 3. Enable / Disable link statistics info: `link_stats`, default is `false`
 4. Receiver rate (hz): `receiver_rate`, default is `100`
@@ -85,7 +85,7 @@ source ~/row2_ws/install/setup.bash
 ros2 run crsf_receiver crsf_receiver_node
 
 # Or setup and run Node with custom parameters values:
-ros2 run crsf_receiver crsf_receiver_node --ros-args -p "device:=/dev/serial0" -p baud_rate:=420000  -p link_stats:=true
+ros2 run crsf_receiver crsf_receiver_node --ros-args -p "device:=/dev/ttyAMA0" -p baud_rate:=420000  -p link_stats:=true
 ```
 
 ### Check
