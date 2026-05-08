@@ -4,16 +4,10 @@
 #include <cstring>
 #include <chrono>
 #include <vector>
-#include <algorithm>
-
-#include <CppLinuxSerial/SerialPort.hpp>
-
-#include "utils.h"
 #include "crc8.h"
 #include "crsf_protocol.h"
 #include "crsf_structs.h"
 
-using namespace mn::CppLinuxSerial;
 using namespace std;
 
 

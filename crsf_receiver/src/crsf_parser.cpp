@@ -1,5 +1,7 @@
 #include "crsf_parser.h"
 
+#include "utils.h"
+
 
 CrsfParser::CrsfParser() : _crc(0xd5)
 {
@@ -93,9 +95,8 @@ void CrsfParser::shift_left_rx_buffer_until_byte(uint8_t key)
         }
     }
 
-    // If not can not find sync byte
+    // If can not find sync byte
     rx_buffer.clear();
-    return;
 }
 
 bool CrsfParser::is_channels_actual() 

@@ -1,82 +1,69 @@
 ## Description
 
-
 **ROS 2** package for receiving CRSF (RC channels values) packets over serial port (UART).
-
 
 **CRSF protocol** packet format [description](https://github.com/crsf-wg/crsf/wiki/Message-Format).
 
-
 ### Topics
-    
+
 - `rc/channels` - received rc channels values
 - `rc/link` - connection statistics information
-
 
 ---
 
 ## Installation
 
-
-
 ### Dependencies:
 
-Install `CppLinuxSerial` before:
+This package uses [`serial_driver`](https://github.com/ros-drivers/transport_drivers) from `ros-drivers/transport_drivers`.
+
+Let's assume that your ROS 2 workspace is located at `~/ros2_ws/`.
+
+### 1. Clone packages from git:
 
 ```bash
-git clone https://github.com/gbmhunter/CppLinuxSerial.git
+cd ~/ros2_ws/src
 
-cd CppLinuxSerial
-mkdir build/
-cd build
-cmake ..
-make
-sudo make install
-cd ../..
-```
+# Transport drivers (serial_driver dependency):
+git clone https://github.com/ros-drivers/transport_drivers.git
 
-
-Let's assume that your ros 2 workspace localized at `~/row2_ws/`.
-
-
-### 1. Clone package from git:
-
-```bash
-cd ~/row2_ws/src
-
-# Types dependency package:
+# This package:
 git clone https://github.com/AndreyTulyakov/ros2_crsf_receiver.git
 ```
 
-### 2. Build
+### 2. Install dependencies via rosdep:
 
 ```bash
-cd ~/row2_ws
+cd ~/ros2_ws
+rosdep install --from-paths src --ignore-src -r -y
+```
 
+### 3. Build
+
+```bash
+cd ~/ros2_ws
+
+colcon build --packages-select io_context serial_driver
 colcon build --packages-select crsf_receiver_msg
 colcon build --packages-select crsf_receiver
 ```
 
-### 3. Re-source
+### 4. Re-source
 
 ```bash
-source ~/row2_ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ```
 
 ---
 
-
-
 ## Running
-
 
 ### Set up params:
 
-1. Serial device name: `device`, default is `/dev/ttyUSB0`
-2. Baud rate: `baud_rate`, default is `420000`
+1. Serial device name: `device`, default is `/dev/serial0`
+2. Baud rate: `baudrate`, default is `420000`
 3. Enable / Disable link statistics info: `link_stats`, default is `false`
 4. Receiver rate (hz): `receiver_rate`, default is `100`
-
 
 ### Run ros node:
 
@@ -85,7 +72,7 @@ source ~/row2_ws/install/setup.bash
 ros2 run crsf_receiver crsf_receiver_node
 
 # Or setup and run Node with custom parameters values:
-ros2 run crsf_receiver crsf_receiver_node --ros-args -p "device:=/dev/serial0" -p baud_rate:=420000  -p link_stats:=true
+ros2 run crsf_receiver crsf_receiver_node --ros-args -p "device:=/dev/ttyUSB0" -p baudrate:=420000 -p link_stats:=true
 ```
 
 ### Check
@@ -96,16 +83,14 @@ After correct setup and running without errors you can check topics:
 # Check channels values
 ros2 topic echo /rc/channels
 
-# Check link statisics
+# Check link statistics
 ros2 topic echo /rc/link
 
 # Check receiver rate
 ros2 topic hz /rc/channels
 ```
 
-
-
-###  Link statistics message fields:
+### Link statistics message fields:
 
 - `uplink_rssi_ant1` - ( dBm * -1 )
 - `uplink_rssi_ant2` - ( dBm * -1 )
